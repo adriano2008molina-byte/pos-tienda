@@ -1,7 +1,3 @@
-/* =========================
-   POS TIENDA - CSS FINAL PRO
-========================= */
-
 *{
   margin:0;
   padding:0;
@@ -14,221 +10,196 @@ body{
   color:white;
 }
 
-/* ================= LOGIN ================= */
-
-.container{
-  width:100%;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.card{
-  background:#1e293b;
-  padding:35px;
-  border-radius:20px;
-  width:100%;
-  max-width:420px;
-  box-shadow:0 0 25px rgba(0,0,0,0.4);
-}
-
-.card h1{
-  text-align:center;
-  margin-bottom:20px;
-  color:#3b82f6;
-}
-
-/* ================= INPUTS ================= */
-
-.input{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  margin-top:12px;
-  background:#334155;
-  color:white;
-  font-size:15px;
-  outline:none;
-}
-
-.input::placeholder{
-  color:#cbd5e1;
-}
-
-/* ================= BOTONES ================= */
-
-.button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  margin-top:20px;
-  background:#3b82f6;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.button:hover{
-  background:#2563eb;
-}
-
-/* ================= LAYOUT ================= */
+/* ===== LAYOUT ===== */
 
 .layout{
   display:flex;
   min-height:100vh;
 }
 
-/* ================= SIDEBAR ================= */
+/* ===== SIDEBAR ===== */
 
 .sidebar{
   width:260px;
   background:#020617;
-  padding:25px;
+  padding:30px 20px;
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:15px;
+  border-right:1px solid #1e293b;
 }
 
 .sidebar h2{
   margin-bottom:20px;
-  color:#3b82f6;
+  text-align:center;
+  color:#38bdf8;
+  font-size:28px;
 }
 
 .sidebar a{
-  color:white;
   text-decoration:none;
-  padding:12px;
-  border-radius:10px;
+  color:white;
+  padding:14px;
+  border-radius:12px;
   transition:0.3s;
+  background:#0f172a;
 }
 
 .sidebar a:hover{
-  background:#1e293b;
+  background:#38bdf8;
+  transform:translateX(5px);
 }
 
-.logoutBtn{
-  margin-top:auto;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  background:#ef4444;
-  color:white;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.logoutBtn:hover{
-  background:#dc2626;
-}
-
-/* ================= CONTENIDO ================= */
+/* ===== CONTENT ===== */
 
 .content{
   flex:1;
   padding:30px;
 }
 
-/* ================= DASHBOARD ================= */
+/* ===== TITULOS ===== */
 
-.cards{
+h1{
+  margin-bottom:25px;
+  font-size:34px;
+}
+
+/* ===== CARD ===== */
+
+.card{
+  background:#1e293b;
+  padding:25px;
+  border-radius:20px;
+  margin-bottom:25px;
+  box-shadow:
+  0 0 20px rgba(0,0,0,0.3);
+}
+
+/* ===== INPUT ===== */
+
+.input{
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:12px;
+  background:#0f172a;
+  color:white;
+  font-size:16px;
+}
+
+/* ===== BOTONES ===== */
+
+.button{
+  background:#38bdf8;
+  color:white;
+  border:none;
+  padding:14px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.3s;
+  font-weight:bold;
+}
+
+.button:hover{
+  transform:scale(1.05);
+}
+
+.deleteBtn{
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* ===== GRID ===== */
+
+.productosGrid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns:
+  repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
   margin-top:25px;
 }
 
-.statCard{
-  background:#1e293b;
-  padding:25px;
-  border-radius:20px;
-  box-shadow:0 0 15px rgba(0,0,0,0.2);
-}
-
-.statCard h2{
-  font-size:30px;
-  color:#3b82f6;
-  margin-bottom:10px;
-}
-
-/* ================= PRODUCTOS ================= */
-
-.productosGrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-  margin-top:20px;
-}
+/* ===== PRODUCTO ===== */
 
 .productoCard{
   background:#1e293b;
   padding:20px;
-  border-radius:20px;
+  border-radius:18px;
   transition:0.3s;
-  box-shadow:0 0 15px rgba(0,0,0,0.2);
+  box-shadow:
+  0 0 15px rgba(0,0,0,0.2);
 }
 
 .productoCard:hover{
   transform:translateY(-5px);
 }
 
-.productoCard h2,
-.productoCard h3{
+.productoCard h2{
   margin-bottom:10px;
 }
 
-.deleteBtn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#ef4444;
-  color:white;
-  cursor:pointer;
-  margin-top:15px;
+.productoCard p{
+  margin:8px 0;
+  color:#cbd5e1;
 }
 
-.deleteBtn:hover{
-  background:#dc2626;
-}
+/* ===== STATS ===== */
 
-/* ================= VENTAS ================= */
-
-.ventasContainer{
+.statsGrid{
   display:grid;
-  grid-template-columns:2fr 1fr;
+  grid-template-columns:
+  repeat(auto-fit,minmax(220px,1fr));
   gap:20px;
 }
 
-.carrito{
+.statCard{
   background:#1e293b;
-  padding:20px;
+  padding:25px;
   border-radius:20px;
-  position:sticky;
-  top:20px;
+  box-shadow:
+  0 0 15px rgba(0,0,0,0.2);
 }
 
-.carritoItem{
-  background:#334155;
-  padding:15px;
-  border-radius:15px;
+.statCard h2{
+  color:#94a3b8;
   margin-bottom:10px;
 }
 
-/* ================= CLIENTES ================= */
-
-.grafica{
-  background:#1e293b;
-  padding:20px;
-  border-radius:20px;
-  margin-top:20px;
+.statCard p{
+  font-size:30px;
+  font-weight:bold;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ===== BOTON REGRESAR ===== */
+
+.backBtn{
+  background:#334155;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+/* ===== LOGOUT ===== */
+
+.logoutBtn{
+  margin-top:auto;
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+/* ===== RESPONSIVE ===== */
 
 @media(max-width:900px){
 
@@ -239,11 +210,7 @@ body{
   .sidebar{
     width:100%;
     flex-direction:row;
-    flex-wrap:wrap;
-  }
-
-  .ventasContainer{
-    grid-template-columns:1fr;
+    overflow:auto;
   }
 
 }

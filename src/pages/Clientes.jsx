@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import {
-  addDoc,
   collection,
+  addDoc,
   onSnapshot,
   deleteDoc,
   doc
@@ -12,41 +12,34 @@ import { db } from "../firebase";
 
 import Sidebar from "../components/Sidebar";
 
+import BotonRegresar from "../components/BotonRegresar";
+
 import "../styles/auth.css";
 
 export default function Clientes() {
 
-  const [nombre,setNombre] =
-    useState("");
+  const [nombre, setNombre] = useState("");
 
-  const [telefono,setTelefono] =
-    useState("");
+  const [telefono, setTelefono] = useState("");
 
-  const [direccion,setDireccion] =
-    useState("");
+  const [direccion, setDireccion] = useState("");
 
-  const [clientes,setClientes] =
-    useState([]);
+  const [clientes, setClientes] = useState([]);
+
+  // ===== GUARDAR =====
 
   const guardarCliente = async () => {
 
-    if(
-      !nombre ||
-      !telefono ||
-      !direccion
-    ){
-      return alert(
-        "Completa todos los campos"
-      );
+    if (!nombre) {
+      return alert("Ingrese nombre");
     }
 
     await addDoc(
-      collection(db,"clientes"),
+      collection(db, "clientes"),
       {
         nombre,
         telefono,
-        direccion,
-        fecha:new Date()
+        direccion
       }
     );
 
@@ -54,43 +47,47 @@ export default function Clientes() {
     setTelefono("");
     setDireccion("");
 
+    alert("Cliente agregado");
+
   };
 
-  useEffect(()=>{
+  // ===== CARGAR =====
 
-    const unsubscribe =
-      onSnapshot(
-        collection(db,"clientes"),
-        (snapshot)=>{
+  useEffect(() => {
 
-          const lista=[];
+    const unsubscribe = onSnapshot(
+      collection(db, "clientes"),
+      (snapshot) => {
 
-          snapshot.forEach((doc)=>{
+        const lista = [];
 
-            lista.push({
-              id:doc.id,
-              ...doc.data()
-            });
+        snapshot.forEach((docu) => {
 
+          lista.push({
+            id: docu.id,
+            ...docu.data()
           });
 
-          setClientes(lista);
+        });
 
-        }
-      );
+        setClientes(lista);
 
-    return ()=>unsubscribe();
+      }
+    );
 
-  },[]);
+    return () => unsubscribe();
 
-  const eliminarCliente =
-    async(id)=>{
+  }, []);
 
-      await deleteDoc(
-        doc(db,"clientes",id)
-      );
+  // ===== ELIMINAR =====
 
-    };
+  const eliminarCliente = async (id) => {
+
+    await deleteDoc(
+      doc(db, "clientes", id)
+    );
+
+  };
 
   return (
 
@@ -100,9 +97,11 @@ export default function Clientes() {
 
       <div className="content">
 
+        <BotonRegresar />
+
         <h1>Clientes</h1>
 
-        <br />
+        {/* ===== FORMULARIO ===== */}
 
         <div className="card">
 
@@ -110,7 +109,7 @@ export default function Clientes() {
             className="input"
             placeholder="Nombre"
             value={nombre}
-            onChange={(e)=>
+            onChange={(e) =>
               setNombre(e.target.value)
             }
           />
@@ -119,7 +118,7 @@ export default function Clientes() {
             className="input"
             placeholder="Teléfono"
             value={telefono}
-            onChange={(e)=>
+            onChange={(e) =>
               setTelefono(e.target.value)
             }
           />
@@ -128,7 +127,7 @@ export default function Clientes() {
             className="input"
             placeholder="Dirección"
             value={direccion}
-            onChange={(e)=>
+            onChange={(e) =>
               setDireccion(e.target.value)
             }
           />
@@ -142,11 +141,11 @@ export default function Clientes() {
 
         </div>
 
-        <br />
+        {/* ===== LISTA ===== */}
 
         <div className="productosGrid">
 
-          {clientes.map((cliente)=>(
+          {clientes.map((cliente) => (
 
             <div
               className="productoCard"
@@ -167,8 +166,10 @@ export default function Clientes() {
 
               <button
                 className="deleteBtn"
-                onClick={()=>
-                  eliminarCliente(cliente.id)
+                onClick={() =>
+                  eliminarCliente(
+                    cliente.id
+                  )
                 }
               >
                 Eliminar

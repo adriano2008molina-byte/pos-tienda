@@ -9,7 +9,13 @@ import { db } from "../firebase";
 
 import Sidebar from "../components/Sidebar";
 
+import BotonRegresar from "../components/BotonRegresar";
+
 import "../styles/auth.css";
+
+import {
+  Bar
+} from "react-chartjs-2";
 
 import {
   Chart as ChartJS,
@@ -20,8 +26,6 @@ import {
   Tooltip,
   Legend
 } from "chart.js";
-
-import { Bar } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
@@ -34,123 +38,94 @@ ChartJS.register(
 
 export default function Estadisticas() {
 
-  const [ventas,setVentas] =
-    useState([]);
+  const [ventas, setVentas] = useState([]);
 
-  const [productos,setProductos] =
-    useState([]);
+  const [productos, setProductos] = useState([]);
 
-  const [clientes,setClientes] =
-    useState([]);
+  // ===== CARGAR VENTAS =====
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    const unsubscribeVentas =
-      onSnapshot(
-        collection(db,"ventas"),
-        (snapshot)=>{
+    const unsubscribeVentas = onSnapshot(
+      collection(db, "ventas"),
+      (snapshot) => {
 
-          const lista=[];
+        const lista = [];
 
-          snapshot.forEach((doc)=>{
+        snapshot.forEach((docu) => {
 
-            lista.push(doc.data());
-
+          lista.push({
+            id: docu.id,
+            ...docu.data()
           });
 
-          setVentas(lista);
+        });
 
-        }
-      );
+        setVentas(lista);
 
-    const unsubscribeProductos =
-      onSnapshot(
-        collection(db,"productos"),
-        (snapshot)=>{
+      }
+    );
 
-          const lista=[];
+    const unsubscribeProductos = onSnapshot(
+      collection(db, "productos"),
+      (snapshot) => {
 
-          snapshot.forEach((doc)=>{
+        const lista = [];
 
-            lista.push(doc.data());
+        snapshot.forEach((docu) => {
 
+          lista.push({
+            id: docu.id,
+            ...docu.data()
           });
 
-          setProductos(lista);
+        });
 
-        }
-      );
+        setProductos(lista);
 
-    const unsubscribeClientes =
-      onSnapshot(
-        collection(db,"clientes"),
-        (snapshot)=>{
+      }
+    );
 
-          const lista=[];
-
-          snapshot.forEach((doc)=>{
-
-            lista.push(doc.data());
-
-          });
-
-          setClientes(lista);
-
-        }
-      );
-
-    return ()=>{
+    return () => {
 
       unsubscribeVentas();
+
       unsubscribeProductos();
-      unsubscribeClientes();
 
     };
 
-  },[]);
+  }, []);
 
-  const totalVentas =
-    ventas.reduce(
-      (acc,item)=>
-        acc + Number(item.total),
-      0
-    );
+  // ===== TOTAL VENTAS =====
 
-  const ganancias =
-    productos.reduce(
-      (acc,item)=>
+  const totalVentas = ventas.reduce(
 
-        acc +
-        Number(item.ganancia),
+    (acc, venta) => acc + venta.total,
 
-      0
-    );
+    0
+
+  );
+
+  // ===== DATOS GRÁFICA =====
 
   const data = {
 
-    labels:[
+    labels: [
       "Ventas",
-      "Productos",
-      "Clientes",
-      "Ganancias"
+      "Productos"
     ],
 
-    datasets:[
+    datasets: [
+
       {
-        label:"POS Tienda",
-        data:[
-          totalVentas,
-          productos.length,
-          clientes.length,
-          ganancias
-        ],
-        backgroundColor:[
-          "#3b82f6",
-          "#10b981",
-          "#f59e0b",
-          "#ef4444"
+        label: "Estadísticas POS TIENDA",
+
+        data: [
+          ventas.length,
+          productos.length
         ]
       }
+
     ]
 
   };
@@ -163,20 +138,22 @@ export default function Estadisticas() {
 
       <div className="content">
 
+        <BotonRegresar />
+
         <h1>Estadísticas</h1>
 
-        <br />
+        {/* ===== TARJETAS ===== */}
 
-        <div className="cards">
+        <div className="statsGrid">
 
           <div className="statCard">
 
             <h2>
-              ${totalVentas}
-            </h2>
-
-            <p>
               Ventas Totales
+            </h2>
+
+            <p>
+              ${totalVentas}
             </p>
 
           </div>
@@ -184,44 +161,37 @@ export default function Estadisticas() {
           <div className="statCard">
 
             <h2>
-              {productos.length}
+              Cantidad Ventas
             </h2>
 
             <p>
+              {ventas.length}
+            </p>
+
+          </div>
+
+          <div className="statCard">
+
+            <h2>
               Productos
-            </p>
-
-          </div>
-
-          <div className="statCard">
-
-            <h2>
-              {clientes.length}
             </h2>
 
             <p>
-              Clientes
-            </p>
-
-          </div>
-
-          <div className="statCard">
-
-            <h2>
-              ${ganancias}
-            </h2>
-
-            <p>
-              Ganancias
+              {productos.length}
             </p>
 
           </div>
 
         </div>
 
-        <br />
+        {/* ===== GRAFICA ===== */}
 
-        <div className="grafica">
+        <div
+          className="card"
+          style={{
+            marginTop:"30px"
+          }}
+        >
 
           <Bar data={data} />
 
