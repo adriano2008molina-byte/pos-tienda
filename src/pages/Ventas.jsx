@@ -145,14 +145,15 @@ export default function Ventas() {
 
   const total = carrito.reduce(
 
-    (acc, item) =>
+  (acc, item) =>
 
-      acc +
-      item.precioVenta * item.cantidad,
+    acc +
+    Number(item.precioVenta) *
+    Number(item.cantidad),
 
-    0
+  0
 
-  );
+);
 
   // ===== FINALIZAR VENTA =====
 

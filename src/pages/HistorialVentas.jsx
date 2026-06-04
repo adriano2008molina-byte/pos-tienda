@@ -45,90 +45,132 @@ export default function HistorialVentas() {
 
   },[]);
 
-  const imprimirTicket = (venta)=>{
+ const imprimirTicket = (venta) => {
 
-    const doc = new jsPDF();
+  const doc = new jsPDF();
 
-    doc.setFontSize(22);
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(22);
 
-    doc.text("POS TIENDA",65,20);
+  doc.text("POS TIENDA",70,20);
 
-    doc.setFontSize(14);
+  doc.setFontSize(12);
 
-    doc.text("FACTURA",80,30);
+  doc.text(
+    "Sistema Profesional de Ventas",
+    58,
+    28
+  );
 
-    doc.line(20,40,190,40);
+  doc.line(20,35,190,35);
 
-    doc.setFontSize(11);
+  doc.setFontSize(11);
+
+  doc.text(
+    `Factura #: ${venta.id.slice(0,8)}`,
+    20,
+    48
+  );
+
+  doc.text(
+    `Fecha: ${
+      venta.fecha?.toDate
+      ? venta.fecha.toDate().toLocaleString()
+      : new Date().toLocaleString()
+    }`,
+    20,
+    58
+  );
+
+  doc.line(20,65,190,65);
+
+  doc.setFont("helvetica","bold");
+
+  doc.text("Producto",20,78);
+  doc.text("Cant.",110,78);
+  doc.text("Precio",140,78);
+  doc.text("Subtotal",165,78);
+
+  doc.line(20,82,190,82);
+
+  doc.setFont("helvetica","normal");
+
+  let y = 95;
+
+  venta.productos?.forEach((p)=>{
+
+    const subtotal =
+      Number(p.precioVenta) *
+      Number(p.cantidad);
 
     doc.text(
-      `Fecha: ${
-        venta.fecha?.toDate
-        ? venta.fecha.toDate()
-        .toLocaleString()
-        : ""
-      }`,
+      String(p.nombre).substring(0,22),
       20,
-      55
+      y
     );
 
     doc.text(
-      `ID: ${venta.id}`,
-      20,
-      65
+      String(p.cantidad),
+      115,
+      y
     );
-
-    doc.line(20,75,190,75);
-
-    let y=90;
-
-    venta.productos?.forEach((p,index)=>{
-
-      doc.text(
-        `${index+1}. ${p.nombre}`,
-        20,
-        y
-      );
-
-      doc.text(
-        `x${p.cantidad}`,
-        120,
-        y
-      );
-
-      doc.text(
-        `$${p.precioVenta}`,
-        160,
-        y
-      );
-
-      y += 12;
-
-    });
-
-    doc.line(20,y+5,190,y+5);
-
-    doc.setFontSize(18);
 
     doc.text(
-      `TOTAL: $${venta.total}`,
-      20,
-      y+20
+      `$${Number(p.precioVenta).toFixed(2)}`,
+      140,
+      y
     );
-
-    doc.setFontSize(12);
 
     doc.text(
-      "Gracias por su compra",
-      60,
-      y+40
+      `$${subtotal.toFixed(2)}`,
+      165,
+      y
     );
 
-    doc.save(
-      `Factura-${venta.id}.pdf`
-    );
+    y += 12;
 
-  };
+  });
+
+  doc.line(
+    20,
+    y,
+    190,
+    y
+  );
+
+  y += 18;
+
+  doc.setFontSize(18);
+  doc.setFont("helvetica","bold");
+
+  doc.text(
+    `TOTAL: $${Number(venta.total).toFixed(2)}`,
+    20,
+    y
+  );
+
+  y += 25;
+
+  doc.setFontSize(12);
+  doc.setFont("helvetica","normal");
+
+  doc.text(
+    "Gracias por su compra",
+    65,
+    y
+  );
+
+  doc.text(
+    "POS TIENDA",
+    80,
+    y + 10
+  );
+
+  doc.save(
+    `Factura-${venta.id}.pdf`
+  );
+
+};
 
   return(
 
