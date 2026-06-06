@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">POS TIENDA</string>
-    <string name="title_activity_main">POS TIENDA</string>
+    <string name="app_name">TIENDA JEROMY</string>
+    <string name="title_activity_main">TIENDA JEROMY</string>
     <string name="package_name">com.postienda.app</string>
     <string name="custom_url_scheme">com.postienda.app</string>
 </resources>

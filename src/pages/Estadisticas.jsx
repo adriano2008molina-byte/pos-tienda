@@ -118,7 +118,7 @@ export default function Estadisticas() {
     datasets: [
 
       {
-        label: "Estadísticas POS TIENDA",
+        label: "Estadísticas TIENDA JEROMY",
 
         data: [
           ventas.length,

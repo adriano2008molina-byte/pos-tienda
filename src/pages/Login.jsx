@@ -27,7 +27,7 @@ export default function Login() {
 
       <div className="card">
 
-        <h1>POS TIENDA</h1>
+        <h1>TIENDA JEROMY</h1>
 
         <input
           className="input"

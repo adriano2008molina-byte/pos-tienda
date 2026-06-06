@@ -7,6 +7,10 @@ import Ventas from "./pages/Ventas";
 import Clientes from "./pages/Clientes";
 import Estadisticas from "./pages/Estadisticas";
 import HistorialVentas from "./pages/HistorialVentas";
+import CierreCaja from "./pages/Cierrecaja";
+import HistorialCierres from "./pages/HistorialCierres";
+import Reportes from "./pages/Reportes";
+import ProductosVendidos from "./pages/ProductosVendidos";
 
 export default function App() {
   return (
@@ -19,6 +23,10 @@ export default function App() {
         <Route path="/clientes" element={<Clientes />} />
         <Route path="/estadisticas" element={<Estadisticas />} />
         <Route path="/historial" element={<HistorialVentas />} />
+        <Route path="/cierre-caja" element={<CierreCaja />} />
+        <Route path="/reportes" element={<Reportes />} />
+        <Route path="/productos-vendidos" element={<ProductosVendidos />} />
+        <Route path="/historial-cierres" element={<HistorialCierres />} />
       </Routes>
     </BrowserRouter>
   );

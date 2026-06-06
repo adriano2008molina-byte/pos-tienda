@@ -1,8 +1,132 @@
+import { useEffect, useState } from "react";
+
 import Sidebar from "../components/Sidebar";
 
 import "../styles/auth.css";
 
+import {
+  collection,
+  onSnapshot
+} from "firebase/firestore";
+
+import { db } from "../firebase";
+
 export default function Dashboard(){
+  const [ventas,setVentas] =
+useState([]);
+
+const [productos,setProductos] =
+useState([]);
+useEffect(()=>{
+
+  const unsubVentas =
+    onSnapshot(
+
+      collection(db,"ventas"),
+
+      (snapshot)=>{
+
+        const lista=[];
+
+        snapshot.forEach((docu)=>{
+
+          lista.push({
+            id:docu.id,
+            ...docu.data()
+          });
+
+        });
+
+        setVentas(lista);
+
+      }
+
+    );
+
+  const unsubProductos =
+    onSnapshot(
+
+      collection(db,"productos"),
+
+      (snapshot)=>{
+
+        const lista=[];
+
+        snapshot.forEach((docu)=>{
+
+          lista.push({
+            id:docu.id,
+            ...docu.data()
+          });
+
+        });
+
+        setProductos(lista);
+
+      }
+
+    );
+
+  return ()=>{
+
+    unsubVentas();
+
+    unsubProductos();
+
+  };
+
+},[]);
+const ventasHoy =
+
+  ventas.reduce(
+
+    (acc,v)=>
+
+      acc +
+      Number(v.total || 0),
+
+    0
+
+  );
+
+const productosVendidos =
+
+  ventas.reduce(
+
+    (acc,v)=>{
+
+      let cantidad=0;
+
+      v.productos?.forEach(
+
+        (p)=>{
+
+          cantidad +=
+            Number(
+              p.cantidad
+            );
+
+        }
+
+      );
+
+      return acc + cantidad;
+
+    },
+
+    0
+
+  );
+
+const stockBajo =
+
+  productos.filter(
+
+    (p)=>
+
+      Number(p.stock) <= 5
+
+  ).length;
 
   return(
 
@@ -16,57 +140,57 @@ export default function Dashboard(){
           Dashboard
         </h1>
 
-        <div className="statsGrid">
+      <div className="statsGrid">
 
-          <div className="statCard">
+  <div className="statCard">
 
-            <h2>
-              💰 Ventas
-            </h2>
+    <h2>
+      💰 Ventas Totales
+    </h2>
 
-            <p>
-              Sistema activo
-            </p>
+    <p>
+      ${ventasHoy.toFixed(2)}
+    </p>
 
-          </div>
+  </div>
 
-          <div className="statCard">
+  <div className="statCard">
 
-            <h2>
-              📦 Inventario
-            </h2>
+    <h2>
+      🧾 Ventas
+    </h2>
 
-            <p>
-              Gestión completa
-            </p>
+    <p>
+      {ventas.length}
+    </p>
 
-          </div>
+  </div>
 
-          <div className="statCard">
+  <div className="statCard">
 
-            <h2>
-              👥 Clientes
-            </h2>
+    <h2>
+      📦 Productos Vendidos
+    </h2>
 
-            <p>
-              Base de datos
-            </p>
+    <p>
+      {productosVendidos}
+    </p>
 
-          </div>
+  </div>
 
-          <div className="statCard">
+  <div className="statCard">
 
-            <h2>
-              ☁ Firebase
-            </h2>
+    <h2>
+      ⚠ Stock Bajo
+    </h2>
 
-            <p>
-              Tiempo real
-            </p>
+    <p>
+      {stockBajo}
+    </p>
 
-          </div>
+  </div>
 
-        </div>
+</div>
 
         <div
           className="card"
@@ -76,7 +200,7 @@ export default function Dashboard(){
         >
 
           <h2>
-            Bienvenido a POS TIENDA
+            Bienvenido a TIENDA JEROMY
           </h2>
 
           <p

@@ -43,6 +43,8 @@ body{
   border-radius:12px;
   transition:0.3s;
   background:#0f172a;
+  display:block;
+  width:100%;
 }
 
 .sidebar a:hover{
@@ -213,4 +215,23 @@ h1{
     overflow:auto;
   }
 
+}
+/* ===== CIERRE DE CAJA ===== */
+
+.resumenCaja{
+  background:#1e293b;
+  padding:25px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+.diferenciaPositiva{
+  color:#22c55e;
+  font-weight:bold;
+}
+
+.diferenciaNegativa{
+  color:#ef4444;
+  font-weight:bold;
 }

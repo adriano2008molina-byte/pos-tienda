@@ -25,6 +25,11 @@ export default function Inventario() {
   const [stock,setStock]=useState("");
   const [precioCompra,setPrecioCompra]=useState("");
   const [precioVenta,setPrecioVenta]=useState("");
+  const [codigoBarras,setCodigoBarras]=useState("");
+const [iva,setIva]=useState("15");
+const [stockMinimo,setStockMinimo]=useState("5");
+const [proveedor,setProveedor]=useState("");
+const [descripcion,setDescripcion]=useState("");
   const [busqueda,setBusqueda]=useState("");
 
   const [productos,setProductos]=useState([]);
@@ -39,35 +44,44 @@ export default function Inventario() {
 
     if(editando){
 
-      await updateDoc(
-        doc(db,"productos",editando),
-        {
-          nombre,
-          categoria,
-          imagen,
-          stock:Number(stock),
-          precioCompra:Number(precioCompra),
-          precioVenta:Number(precioVenta),
-          ganancia
-        }
-      );
-
+await updateDoc(
+  doc(db,"productos",editando),
+  {
+    nombre,
+    categoria,
+    imagen,
+    codigoBarras,
+    iva:Number(iva),
+    stockMinimo:Number(stockMinimo),
+    proveedor,
+    descripcion,
+    stock:Number(stock),
+    precioCompra:Number(precioCompra),
+    precioVenta:Number(precioVenta),
+    ganancia
+  }
+);
       setEditando(null);
 
     }else{
 
-      await addDoc(
-        collection(db,"productos"),
-        {
-          nombre,
-          categoria,
-          imagen,
-          stock:Number(stock),
-          precioCompra:Number(precioCompra),
-          precioVenta:Number(precioVenta),
-          ganancia
-        }
-      );
+await addDoc(
+  collection(db,"productos"),
+  {
+    nombre,
+    categoria,
+    imagen,
+    codigoBarras,
+    iva:Number(iva),
+    stockMinimo:Number(stockMinimo),
+    proveedor,
+    descripcion,
+    stock:Number(stock),
+    precioCompra:Number(precioCompra),
+    precioVenta:Number(precioVenta),
+    ganancia
+  }
+);
 
     }
 

@@ -26,7 +26,7 @@ export default function Sidebar(){
     <div className="sidebar">
 
       <h2>
-        POS TIENDA
+        TIENDA JEROMY
       </h2>
 
       <Link to="/dashboard">
@@ -52,6 +52,21 @@ export default function Sidebar(){
       <Link to="/estadisticas">
         📈 Estadísticas
       </Link>
+  <Link to="/cierre-caja">
+  🔒 Cierre Caja
+</Link>
+
+<Link to="/reportes">
+  📊 Reportes
+</Link>
+
+<Link to="/historial-cierres">
+  📑 Historial Cierres
+</Link>
+
+<Link to="/productos-vendidos">
+  🏆 Más Vendidos
+</Link>
 
       <button
         className="logoutBtn"

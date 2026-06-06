@@ -23,6 +23,11 @@ export default function Ventas() {
 
   const [carrito, setCarrito] = useState([]);
 
+  const [cliente,setCliente]=useState("");
+const [cedula,setCedula]=useState("");
+const [metodoPago,setMetodoPago]=useState("Efectivo");
+const [recibido,setRecibido]=useState("");
+
   // ===== CARGAR PRODUCTOS =====
 
   useEffect(() => {
@@ -55,38 +60,63 @@ export default function Ventas() {
 
   const agregar = (producto) => {
 
-    const existe = carrito.find(
-      (item) => item.id === producto.id
+  if (producto.stock <= 0) {
+
+    alert(
+      "Este producto no tiene stock disponible"
     );
 
-    if (existe) {
+    return;
 
-      const nuevoCarrito = carrito.map((item) =>
+  }
+
+  const existe = carrito.find(
+    (item) => item.id === producto.id
+  );
+
+  if (existe) {
+
+    if (
+      existe.cantidad >= producto.stock
+    ) {
+
+      alert(
+        "No hay más unidades disponibles"
+      );
+
+      return;
+
+    }
+
+    const nuevoCarrito = carrito.map(
+
+      (item) =>
 
         item.id === producto.id
           ? {
               ...item,
-              cantidad: item.cantidad + 1
+              cantidad:
+                item.cantidad + 1
             }
           : item
 
-      );
+    );
 
-      setCarrito(nuevoCarrito);
+    setCarrito(nuevoCarrito);
 
-    } else {
+  } else {
 
-      setCarrito([
-        ...carrito,
-        {
-          ...producto,
-          cantidad: 1
-        }
-      ]);
+    setCarrito([
+      ...carrito,
+      {
+        ...producto,
+        cantidad: 1
+      }
+    ]);
 
-    }
+  }
 
-  };
+};
 
   // ===== AUMENTAR =====
 
@@ -142,8 +172,7 @@ export default function Ventas() {
   };
 
   // ===== TOTAL =====
-
-  const total = carrito.reduce(
+const total = carrito.reduce(
 
   (acc, item) =>
 
@@ -154,6 +183,31 @@ export default function Ventas() {
   0
 
 );
+
+ const subtotal = carrito.reduce(
+
+  (acc,item)=>
+
+    acc +
+
+    (
+      Number(item.precioVenta) *
+      Number(item.cantidad)
+    ) /
+
+    (1 + Number(item.iva || 0)/100),
+
+  0
+
+);
+
+const ivaTotal = total - subtotal;
+
+const cambio =
+
+  Number(recibido || 0) -
+
+  Number(total);
 
   // ===== FINALIZAR VENTA =====
 
@@ -169,15 +223,47 @@ export default function Ventas() {
 
     // GUARDAR VENTA
 
-    await addDoc(
-      collection(db, "ventas"),
-      {
-        productos: carrito,
-        total,
-        fecha: serverTimestamp()
-      }
-    );
+  await addDoc(
+  collection(db,"ventas"),
+  {
+    estado:"ACTIVA",
+    cliente:
+      cliente || "Consumidor Final",
 
+    cedula:
+      cedula || "-",
+
+    metodoPago,
+
+    recibido:
+      Number(recibido || 0),
+
+    cambio:
+      cambio > 0
+      ? cambio
+      : 0,
+numeroFactura:
+  "FAC-" + Date.now(),
+    productos: carrito,
+
+    subtotal:
+      Number(
+        subtotal.toFixed(2)
+      ),
+
+    iva:
+      Number(
+        ivaTotal.toFixed(2)
+      ),
+
+    total:
+      Number(
+        total.toFixed(2)
+      ),
+
+    fecha: new Date()
+  }
+);
     // ACTUALIZAR STOCK
 
     for (const item of carrito) {
@@ -210,7 +296,61 @@ export default function Ventas() {
       <div className="content">
 
         <BotonRegresar />
+<div className="card">
 
+  <input
+    className="input"
+    placeholder="Nombre Cliente"
+    value={cliente}
+    onChange={(e)=>
+      setCliente(e.target.value)
+    }
+  />
+
+  <input
+    className="input"
+    placeholder="Cédula"
+    value={cedula}
+    onChange={(e)=>
+      setCedula(e.target.value)
+    }
+  />
+
+  <select
+    className="input"
+    value={metodoPago}
+    onChange={(e)=>
+      setMetodoPago(
+        e.target.value
+      )
+    }
+  >
+    <option>
+      Efectivo
+    </option>
+
+    <option>
+      Transferencia
+    </option>
+
+    <option>
+      Tarjeta
+    </option>
+  </select>
+
+  <input
+    className="input"
+    type="number"
+    placeholder="Dinero Recibido"
+    value={recibido}
+    onChange={(e)=>
+      setRecibido(
+        e.target.value
+      )
+    }
+  />
+
+</div>
         <h1>Ventas</h1>
 
         {/* ===== PRODUCTOS ===== */}
@@ -344,23 +484,42 @@ export default function Ventas() {
 
         </div>
 
-        {/* ===== TOTAL ===== */}
+{/* ===== TOTAL ===== */}
 
-        <h2
-          style={{
-            marginTop:"30px"
-          }}
-        >
-          Total:
-          ${total}
-        </h2>
+<h2
+  style={{
+    marginTop:"30px"
+  }}
+>
+  Total:
+  ${total.toFixed(2)}
+</h2>
 
-        <button
-          className="button"
-          onClick={finalizarVenta}
-        >
-          Finalizar Venta
-        </button>
+<p>
+  Subtotal:
+  ${subtotal.toFixed(2)}
+</p>
+
+<p>
+  IVA:
+  ${ivaTotal.toFixed(2)}
+</p>
+
+<p>
+  Cambio:
+  ${
+    cambio > 0
+      ? cambio.toFixed(2)
+      : "0.00"
+  }
+</p>
+
+<button
+  className="button"
+  onClick={finalizarVenta}
+>
+  Finalizar Venta
+</button>
 
       </div>
 

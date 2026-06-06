@@ -50,7 +50,7 @@ export default function Register() {
 
     <div>
 
-      <h1>Registro POS Tienda</h1>
+      <h1>Registro TIENDA JEROMY</h1>
 
       <input
         type="email"
