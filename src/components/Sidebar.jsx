@@ -24,6 +24,23 @@ export default function Sidebar(){
   return(
 
     <div className="sidebar">
+      <img
+  src="https://cdn-icons-png.flaticon.com/512/415/415733.png"
+  className="floating1"
+  alt=""
+/>
+
+<img
+  src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"
+  className="floating2"
+  alt=""
+/>
+
+<img
+  src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+  className="floating3"
+  alt=""
+/>
 
       <h2>
         TIENDA JEROMY

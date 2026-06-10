@@ -2,12 +2,28 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family:'Poppins', sans-serif;
 }
 
 body{
-  background:#0f172a;
+  background:
+  linear-gradient(
+    135deg,
+    #14532d,
+    #166534,
+    #15803d
+  );
+
   color:white;
+  background:
+linear-gradient(
+135deg,
+#14532d,
+#166534,
+#15803d
+);
+
+background-attachment:fixed;
 }
 
 /* ===== LAYOUT ===== */
@@ -63,18 +79,28 @@ body{
 
 h1{
   margin-bottom:25px;
-  font-size:34px;
+  font-size:42px;
+  font-weight:800;
+  letter-spacing:1px;
+  text-shadow:
+    0 0 15px rgba(255,255,255,0.15);
 }
 
 /* ===== CARD ===== */
 
 .card{
-  background:#1e293b;
+  background:
+  rgba(255,255,255,0.1);
+
+  backdrop-filter:blur(10px);
+
+  border:
+  1px solid
+  rgba(255,255,255,0.1);
+
   padding:25px;
+
   border-radius:20px;
-  margin-bottom:25px;
-  box-shadow:
-  0 0 20px rgba(0,0,0,0.3);
 }
 
 /* ===== INPUT ===== */
@@ -93,14 +119,31 @@ h1{
 /* ===== BOTONES ===== */
 
 .button{
-  background:#38bdf8;
+  width:100%;
+  background:
+  linear-gradient(
+    135deg,
+    #22c55e,
+    #16a34a
+  );
+
   color:white;
   border:none;
-  padding:14px 20px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:15px;
   cursor:pointer;
+  font-size:16px;
+  font-weight:700;
+
   transition:0.3s;
-  font-weight:bold;
+}
+
+.button:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 10px 20px
+  rgba(34,197,94,0.4);
 }
 
 .button:hover{
@@ -129,12 +172,18 @@ h1{
 /* ===== PRODUCTO ===== */
 
 .productoCard{
-  background:#1e293b;
+  background:
+  rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(10px);
+
+  border:
+  1px solid
+  rgba(255,255,255,0.1);
+
   padding:20px;
+
   border-radius:18px;
-  transition:0.3s;
-  box-shadow:
-  0 0 15px rgba(0,0,0,0.2);
 }
 
 .productoCard:hover{
@@ -234,4 +283,128 @@ h1{
 .diferenciaNegativa{
   color:#ef4444;
   font-weight:bold;
+}
+
+/* ===== LOGO ===== */
+
+
+
+.logoLogin{
+  width:220px;
+  display:block;
+  margin:0 auto 20px auto;
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(34,197,94,0.5);
+}
+.floating1,
+.floating2,
+.floating3{
+  position:fixed;
+  width:80px;
+  opacity:0.15;
+  pointer-events:none;
+  z-index:0;
+  animation:flotar 6s ease-in-out infinite;
+}
+
+.floating1{
+  top:100px;
+  left:60px;
+}
+
+.floating2{
+  top:120px;
+  right:60px;
+}
+
+.floating3{
+  bottom:80px;
+  left:100px;
+}
+@keyframes flotar{
+
+  0%{
+    transform:
+    translateY(0px);
+  }
+
+  50%{
+    transform:
+    translateY(-20px);
+  }
+
+  100%{
+    transform:
+    translateY(0px);
+  }
+
+}
+/* ===== LOGIN ===== */
+
+.container{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.container .card{
+  width:100%;
+  max-width:450px;
+}
+
+.container h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+.registerCard{
+  width:100%;
+  max-width:500px;
+  text-align:center;
+}
+
+.registerCard h1{
+  color:white;
+  margin-bottom:25px;
+}
+
+.registerCard .button{
+  width:100%;
+}
+
+.registerCard .backBtn{
+  width:100%;
+}
+.logoTitulo{
+  text-align:center;
+  font-size:48px;
+  font-weight:800;
+  color:white;
+  margin-bottom:20px;
+
+  text-shadow:
+    0 0 15px #22c55e,
+    0 0 25px #22c55e;
+}
+.tituloRegistro{
+  text-align:center;
+  font-size:42px;
+  font-weight:800;
+  color:white;
+  margin-bottom:5px;
+  line-height:1;
+}
+
+.subtituloRegistro{
+  text-align:center;
+  font-size:22px;
+  font-weight:600;
+  color:#dcfce7;
+  margin-bottom:25px;
+}
+.content{
+  position:relative;
+  z-index:1;
 }

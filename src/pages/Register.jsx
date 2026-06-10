@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   createUserWithEmailAndPassword
@@ -13,8 +14,9 @@ import { auth, db } from "../firebase";
 
 export default function Register() {
 
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const register = async () => {
@@ -30,13 +32,18 @@ export default function Register() {
 
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
-        email: email,
-        role: "admin",
-        createdAt: new Date()
-      });
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          email,
+          role: "admin",
+          createdAt: new Date()
+        }
+      );
 
-      alert("Cuenta creada");
+      alert("Cuenta creada correctamente");
+
+      navigate("/");
 
     } catch (error) {
 
@@ -48,33 +55,76 @@ export default function Register() {
 
   return (
 
-    <div>
+    <div className="container">
+ <img
+  src="https://cdn-icons-png.flaticon.com/512/415/415733.png"
+  className="floating1"
+  alt=""
+/>
 
-      <h1>Registro TIENDA JEROMY</h1>
+<img
+  src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"
+  className="floating2"
+  alt=""
+/>
 
-      <input
-        type="email"
-        placeholder="Correo"
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
+<img
+  src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+  className="floating3"
+  alt=""
+/>
+      <div className="card registerCard">
 
-      <br /><br />
+      
 
-      <input
-        type="password"
-        placeholder="Contraseña"
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
+       <h1 className="tituloRegistro">
+  Registro
+</h1>
 
-      <br /><br />
+<h2 className="subtituloRegistro">
+  TIENDA JEROMY
+</h2>
 
-      <button onClick={register}>
-        Crear Cuenta
-      </button>
+        <input
+          className="input"
+          placeholder="Correo"
+          value={email}
+          onChange={(e)=>
+            setEmail(e.target.value)
+          }
+        />
+
+        <input
+          className="input"
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e)=>
+            setPassword(e.target.value)
+          }
+        />
+
+        <button
+          className="button"
+          onClick={register}
+        >
+          Crear Cuenta
+        </button>
+
+        <button
+          className="backBtn"
+          style={{
+            width:"100%",
+            marginTop:"10px"
+          }}
+          onClick={()=>
+            navigate("/")
+          }
+        >
+          Volver al Login
+        </button>
+
+      </div>
 
     </div>
 

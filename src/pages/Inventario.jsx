@@ -6,10 +6,12 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
-  updateDoc
+  updateDoc,
+  query,
+  where
 } from "firebase/firestore";
 
-import { db } from "../firebase";
+import { db,auth } from "../firebase";
 
 import Sidebar from "../components/Sidebar";
 
@@ -68,6 +70,7 @@ await updateDoc(
 await addDoc(
   collection(db,"productos"),
   {
+    userId: auth.currentUser.uid,
     nombre,
     categoria,
     imagen,
@@ -102,8 +105,20 @@ await addDoc(
 
   useEffect(()=>{
 
-    const unsubscribe = onSnapshot(
-      collection(db,"productos"),
+   const q = query(
+  collection(db,"productos"),
+  where(
+    "userId",
+    "==",
+    auth.currentUser.uid
+  )
+);
+
+const unsubscribe = onSnapshot(
+  q,
+
+
+
       (snapshot)=>{
 
         const lista=[];

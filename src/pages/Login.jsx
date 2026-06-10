@@ -25,9 +25,35 @@ export default function Login() {
   return (
     <div className="container">
 
-      <div className="card">
+  <img
+    src="/logo.png"
+    alt="TIENDA JEROMY"
+    className="logoLogin"
+  />
 
-        <h1>TIENDA JEROMY</h1>
+  <div className="card"></div>
+<img
+  src="https://cdn-icons-png.flaticon.com/512/415/415733.png"
+  className="floating1"
+  alt=""
+/>
+
+<img
+  src="https://cdn-icons-png.flaticon.com/512/2909/2909763.png"
+  className="floating2"
+  alt=""
+/>
+
+<img
+  src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+  className="floating3"
+  alt=""
+/>
+
+<h1 className="logoTitulo">
+  TIENDA JEROMY
+</h1>
+      <div className="card">
 
         <input
           className="input"
@@ -45,6 +71,28 @@ export default function Login() {
         <button className="button" onClick={login}>
           Iniciar sesión
         </button>
+        <p
+  style={{
+    textAlign:"center",
+    marginTop:"15px"
+  }}
+>
+  ¿No tienes cuenta?
+</p>
+
+<button
+  className="button"
+  style={{
+    width:"100%",
+    marginTop:"10px",
+    background:"#22c55e"
+  }}
+  onClick={()=>
+    navigate("/register")
+  }
+>
+  📝 Registrarme
+</button>
 
       </div>
 
