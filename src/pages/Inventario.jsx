@@ -19,6 +19,8 @@ import BotonRegresar from "../components/BotonRegresar";
 
 import "../styles/auth.css";
 
+import Scanner from "../components/Scanner";
+
 export default function Inventario() {
 
   const [nombre,setNombre]=useState("");
@@ -33,6 +35,7 @@ const [stockMinimo,setStockMinimo]=useState("5");
 const [proveedor,setProveedor]=useState("");
 const [descripcion,setDescripcion]=useState("");
   const [busqueda,setBusqueda]=useState("");
+  const [codigoBarras,,setCodigoBarras] = useState("");
 
   const [productos,setProductos]=useState([]);
 
@@ -241,6 +244,17 @@ const unsubscribe = onSnapshot(
               setPrecioVenta(e.target.value)
             }
           />
+          <input
+  className="input"
+  placeholder="Código de barras"
+  value={codigoBarras}
+  onChange={(e)=>setCodigoBarras(e.target.value)}
+/>
+<Scanner
+  onScan={(codigo)=>{
+    setCodigoBarras(codigo);
+  }}
+/>
 
           <button
             className="button"

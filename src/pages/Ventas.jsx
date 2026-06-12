@@ -17,6 +17,8 @@ import BotonRegresar from "../components/BotonRegresar";
 
 import "../styles/auth.css";
 
+import Scanner from "../components/Scanner";
+
 export default function Ventas() {
 
   const [productos, setProductos] = useState([]);
@@ -315,6 +317,19 @@ numeroFactura:
       setCedula(e.target.value)
     }
   />
+  <Scanner
+  onScan={(codigo)=>{
+
+    const producto = productos.find(
+      p => p.codigoBarras === codigo
+    );
+
+    if(producto){
+      agregarProducto(producto);
+    }
+
+  }}
+/>
 
   <select
     className="input"

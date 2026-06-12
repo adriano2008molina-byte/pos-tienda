@@ -30,8 +30,6 @@ export default function Login() {
     alt="TIENDA JEROMY"
     className="logoLogin"
   />
-
-  <div className="card"></div>
 <img
   src="https://cdn-icons-png.flaticon.com/512/415/415733.png"
   className="floating1"
