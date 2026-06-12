@@ -317,32 +317,29 @@ numeroFactura:
       setCedula(e.target.value)
     }
   />
- <Scanner
-  onScan={(codigo)=>{
+ <div className="scannerBox">
 
-    const producto = productos.find(
-      p => p.codigoBarras === codigo
-    );
+  <h3 className="scannerTitle">
+    📷 Escanear Producto
+  </h3>
 
-    if(producto){
+  <Scanner
+    onScan={(codigo)=>{
 
-      agregar(producto);
-
-      alert(
-        "Producto agregado: " +
-        producto.nombre
+      const producto = productos.find(
+        p => p.codigoBarras === codigo
       );
 
-    }else{
+      if(producto){
+        agregar(producto);
+      }else{
+        alert("Producto no encontrado");
+      }
 
-      alert(
-        "Producto no encontrado"
-      );
+    }}
+  />
 
-    }
-
-  }}
-/>
+</div>
   <select
     className="input"
     value={metodoPago}

@@ -408,3 +408,37 @@ h1{
   position:relative;
   z-index:1;
 }
+.scannerBox{
+  margin-top:15px;
+  margin-bottom:20px;
+  padding:15px;
+  background:rgba(255,255,255,0.08);
+  border:2px dashed #22c55e;
+  border-radius:20px;
+  text-align:center;
+}
+
+.scannerTitle{
+  color:white;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+#reader__dashboard_section_csr button{
+  background:#22c55e !important;
+  color:white !important;
+  border:none !important;
+  padding:12px 20px !important;
+  border-radius:12px !important;
+  font-weight:bold !important;
+  cursor:pointer !important;
+}
+
+#reader__filescan_input{
+  display:none !important;
+}
+
+#reader__dashboard_section_swaplink{
+  color:#22c55e !important;
+  font-weight:bold !important;
+}

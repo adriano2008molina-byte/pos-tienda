@@ -248,11 +248,19 @@ await addDoc(
   value={codigoBarras}
   onChange={(e)=>setCodigoBarras(e.target.value)}
 />
-<Scanner
-  onScan={(codigo)=>{
-    setCodigoBarras(codigo);
-  }}
-/>
+<div className="scannerBox">
+
+  <h3 className="scannerTitle">
+    📷 Escanear Código de Barras
+  </h3>
+
+  <Scanner
+    onScan={(codigo)=>{
+      setCodigoBarras(codigo);
+    }}
+  />
+
+</div>
 
           <button
             className="button"
