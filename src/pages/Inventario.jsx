@@ -35,7 +35,6 @@ const [stockMinimo,setStockMinimo]=useState("5");
 const [proveedor,setProveedor]=useState("");
 const [descripcion,setDescripcion]=useState("");
   const [busqueda,setBusqueda]=useState("");
-  const [codigoBarras,,setCodigoBarras] = useState("");
 
   const [productos,setProductos]=useState([]);
 
