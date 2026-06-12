@@ -317,7 +317,7 @@ numeroFactura:
       setCedula(e.target.value)
     }
   />
-  <Scanner
+ <Scanner
   onScan={(codigo)=>{
 
     const producto = productos.find(
@@ -325,12 +325,24 @@ numeroFactura:
     );
 
     if(producto){
-      agregarProducto(producto);
+
+      agregar(producto);
+
+      alert(
+        "Producto agregado: " +
+        producto.nombre
+      );
+
+    }else{
+
+      alert(
+        "Producto no encontrado"
+      );
+
     }
 
   }}
 />
-
   <select
     className="input"
     value={metodoPago}
