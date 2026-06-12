@@ -72,7 +72,7 @@ await updateDoc(
 await addDoc(
   collection(db,"productos"),
   {
-    userId: auth.currentUser.uid,
+    userId: auth.currentUser?.uid || "",
     nombre,
     categoria,
     imagen,
@@ -105,43 +105,42 @@ await addDoc(
 
   };
 
-  useEffect(()=>{
+  useEffect(() => {
 
-   const q = query(
-  collection(db,"productos"),
-  where(
-    "userId",
-    "==",
-    auth.currentUser.uid
-  )
-);
+  if (!auth.currentUser) return;
 
-const unsubscribe = onSnapshot(
-  q,
+  const q = query(
+    collection(db, "productos"),
+    where(
+      "userId",
+      "==",
+      auth.currentUser.uid
+    )
+  );
 
+  const unsubscribe = onSnapshot(
+    q,
+    (snapshot) => {
 
+      const lista = [];
 
-      (snapshot)=>{
+      snapshot.forEach((docu) => {
 
-        const lista=[];
-
-        snapshot.forEach((docu)=>{
-
-          lista.push({
-            id:docu.id,
-            ...docu.data()
-          });
-
+        lista.push({
+          id: docu.id,
+          ...docu.data()
         });
 
-        setProductos(lista);
+      });
 
-      }
-    );
+      setProductos(lista);
 
-    return ()=>unsubscribe();
+    }
+  );
 
-  },[]);
+  return () => unsubscribe();
+
+}, []);
 
   const eliminarProducto = async(id)=>{
 
