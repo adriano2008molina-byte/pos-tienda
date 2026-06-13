@@ -442,3 +442,32 @@ h1{
   color:#22c55e !important;
   font-weight:bold !important;
 }
+.mensajeScan{
+  background:#22c55e;
+
+  color:white;
+
+  padding:15px;
+
+  border-radius:15px;
+
+  text-align:center;
+
+  font-weight:700;
+
+  margin-bottom:20px;
+
+  animation:aparecer 0.3s ease;
+}
+
+@keyframes aparecer{
+  from{
+    opacity:0;
+    transform:translateY(-10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}

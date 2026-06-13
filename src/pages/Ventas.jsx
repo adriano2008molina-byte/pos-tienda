@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import {
   collection,
@@ -29,7 +29,10 @@ export default function Ventas() {
 const [cedula,setCedula]=useState("");
 const [metodoPago,setMetodoPago]=useState("Efectivo");
 const [recibido,setRecibido]=useState("");
-
+const[mensaje,SetMensaje] = useState("");
+const [sonidoScan] = useState(
+  new Audio("/beep.mp3")
+);
   // ===== CARGAR PRODUCTOS =====
 
   useEffect(() => {
@@ -117,6 +120,8 @@ const [recibido,setRecibido]=useState("");
     ]);
 
   }
+  sonidoScan.currentTime =0;
+  sonidoScan.play();
 
 };
 
@@ -324,20 +329,23 @@ numeroFactura:
   </h3>
 
   <Scanner
-    onScan={(codigo)=>{
+  onScan={(codigo)=>{
 
-      const producto = productos.find(
-        p => p.codigoBarras === codigo
-      );
+    const producto = productos.find(
+      p => p.codigoBarras === codigo
+    );
 
-      if(producto){
-        agregar(producto);
-      }else{
-        alert("Producto no encontrado");
-      }
+    if(producto){
 
-    }}
-  />
+      agregar(producto);
+
+      sonidoScan.current.currentTime = 0;
+      sonidoScan.current.play();
+
+    }
+
+  }}
+/>
 
 </div>
   <select
@@ -376,6 +384,13 @@ numeroFactura:
 
 </div>
         <h1>Ventas</h1>
+        {mensaje && (
+
+  <div className="mensajeScan">
+    {mensaje}
+  </div>
+
+)}
 
         {/* ===== PRODUCTOS ===== */}
 

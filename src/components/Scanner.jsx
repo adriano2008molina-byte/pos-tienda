@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 export default function Scanner({ onScan }) {
+  let ultimoCodigo = "";
+let ultimoTiempo = 0;
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,12 +37,26 @@ export default function Scanner({ onScan }) {
       false
     );
 
-    scanner.render(
-      (decodedText) => {
-        onScan(decodedText);
-      },
-      () => {}
-    );
+   scanner.render(
+  (decodedText) => {
+
+    const ahora = Date.now();
+
+    if (
+      decodedText === ultimoCodigo &&
+      ahora - ultimoTiempo < 2000
+    ) {
+      return;
+    }
+
+    ultimoCodigo = decodedText;
+    ultimoTiempo = ahora;
+
+    onScan(decodedText);
+
+  },
+  () => {}
+);
 
     return () => {
       scanner.clear().catch(() => {});
