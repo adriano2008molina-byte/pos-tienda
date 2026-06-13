@@ -120,9 +120,6 @@ const [sonidoScan] = useState(
     ]);
 
   }
-  sonidoScan.currentTime =0;
-  sonidoScan.play();
-
 };
 
   // ===== AUMENTAR =====
